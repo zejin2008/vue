@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/demo.css" />
+</head>
+<body>
+
+    <div id="app">
+        <h1><p>{{ message }}</p></h1>
+        <input type="text" v-model="message" />
+
+        <p>
+            <button v-on:click="greet">Greet</button>
+            <button v-on:click="say('Hi')">Hi</button>
+        </p>
+
+
+        <h1 v-if="no">I am true if</h1>
+        <h1 v-else>I am not yes</h1>
+        <h1 v-show="no">I am true show</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="person in people">
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.sex }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <ul class="pagination">
+            <li v-for="n in pageCount">
+                <a href="javascript:void(0)" v-bind:class="activeNumber === n ? 'active':''">{{ n }}</a>
+            </li>
+        </ul>
+
+
+
+        <fieldset>
+            <legend>
+                Create New Person
+            </legend>
+            <div class="form-group">
+                <label>Name:</label>
+                <input type="text" v-model="newPerson.name" />
+            </div>
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="text" v-model="newPerson.age" />
+            </div>
+            <div class="form-group">
+                <label>Sex:</label>
+                <select v-model="newPerson.sex">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label></label>
+                <button v-on:click="createPerson">Create</button>
+            </div>
+        </fieldset>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Sex</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(person,index) in people">
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.age }}</td>
+                    <td>{{ person.sex }}</td>
+                    <td v-bind:class="'text-center'">
+                        <button v-on:click="deletePerson(index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+
+
+        </table>
+
+
+
+    </div>
+
+</body>
+
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
+<script>
+
+    var temdata = {message:"Hello World",yes:true,no:false,
+        newPerson:{name:'',age:0,sex:'Male'},
+        people:[{name:'Jack',age:30,sex:'Male'},
+                {name:'Bill',age:26,sex:'Male'},
+                {name:'Tracy',age:22,sex:'Female'},
+                {name:'Chris',age:36,sex:'Female'},
+                ],
+        activeNumber:1,
+        pageCount:10
+    }
+
+    new Vue({
+        el:"#app",
+        data:temdata,
+        methods:{
+            greet: function () {
+                alert(this.message)
+            },
+            say: function (msg) {
+                alert(msg)
+            },
+            createPerson: function () {
+                this.people.push(this.newPerson);
+                this.newPerson = {name:'',age:0,sex:'Male'}
+            },
+            deletePerson: function (index) {
+                this.people.splice(index,1);
+            }
+        }
+    })
+
+</script>
+
+
+</html>
